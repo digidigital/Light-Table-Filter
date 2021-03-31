@@ -1,6 +1,8 @@
 MIT License
 
-Copyright (c) 2021 digidigital
+Copyright (c) 2021 Bjoern Seipel
+Fork of the forked filter by Chris Coyier  (https://codepen.io/chriscoyier/pen/tIuBL)
+Fork of an original work Light Javascript Table Filter (https://codepen.io/oceatoon/pen/jKqEI
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
