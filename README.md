@@ -1,6 +1,6 @@
 # (Enhanced) Light-Table-Filter
 
-A light javascript-only table filter based on using: https://codepen.io/chriscoyier/pen/tIuBL
+A light javascript-only table filter based on: https://codepen.io/chriscoyier/pen/tIuBL / https://codepen.io/oceatoon/pen/jKqEI
 
 Features:
 
