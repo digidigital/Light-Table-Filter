@@ -1,72 +1,81 @@
-# Light-Table-Filter
+# (Enhanced) Light-Table-Filter
 
-A light javascript-only table filter
+A light javascript-only table filter based on using: https://codepen.io/chriscoyier/pen/tIuBL
 
 Features:
-- "Include Filter" - Only table rows that contain this search term are displayed. 
-- "Exclude Filter" - Table rows that contain the search term are hidden. 
 
-Can be used with multiple tables on the same page. Just replace "order-table" in the input elements' data-table attributes and the tables's class attribute with a unique value for each table.    
+- Supports multiple space-delimited filter phrases
+- Can be used with multiple tables on the same page.
+- "Include Filter" - Table rows that contain at least one include-phrase are displayed. 
+- "Exclude Filter" - Table rows that are visible after the input filter was applied and contain at least one exclude-phrase will be hidden. 
 
-Build using: https://codepen.io/chriscoyier/pen/tIuBL
+To use it with more than one table just replace "order-table" in the input elements' data-table attributes and the tables's class attribute with a unique value for each table.
 
 ## Javascript
 
 ```javascript
 (function(document) {
-	'use strict';
+    'use strict';
 
-	var LightTableFilter = (function(Arr) {
+    var LightTableFilter = (function(Arr) {
 
-		var _input;
-		var _excludeinput;
-		
-		function _onInputEvent(e) {
-	
-		var _datatable=e.target.getAttribute('data-table');
-			
-			if (e.target.className === 'light-table-filter'){   
-				_input = e.target;
-				_excludeinput = document.querySelector("input[class=light-table-exclude-filter][data-table=" + CSS.escape(_datatable) + "]");
-			} else {
-				_input = document.querySelector("input[class=light-table-filter][data-table=" + CSS.escape(_datatable) + "]");
-				_excludeinput = e.target; 
-			}; 
-					
-			var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
-			Arr.forEach.call(tables, function(table) {
-				Arr.forEach.call(table.tBodies, function(tbody) {
-					Arr.forEach.call(tbody.rows, _filter);
-				});
-			});
-		}
+        var _input;
+        var _excludeinput;
 
-		function _filter(row) {
-			var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase(), negval = _excludeinput.value.toLowerCase();		
-			
-			row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row'; 
-			row.style.display = text.indexOf(negval) === -1 || negval == '' ? row.style.display : 'none' ; 	
-		}
+        function _onInputEvent(e) {
 
-		return {
-			init: function() {
-				var inputs = document.getElementsByClassName('light-table-filter');
-				Arr.forEach.call(inputs, function(input) {
-					input.oninput = _onInputEvent;
-				});
-				var inputs = document.getElementsByClassName('light-table-exclude-filter');
-				Arr.forEach.call(inputs, function(input) {
-					input.oninput = _onInputEvent;
-				});
-			}
-		};
-	})(Array.prototype);
+            var _datatable = e.target.getAttribute('data-table');
 
-	document.addEventListener('readystatechange', function() {
-		if (document.readyState === 'complete') {
-			LightTableFilter.init();
-		}
-	});
+            if (e.target.className === 'light-table-filter') {
+                _input = e.target;
+                _excludeinput = document.querySelector("input[class=light-table-exclude-filter][data-table=" + CSS.escape(_datatable) + "]");
+            } else {
+                _input = document.querySelector("input[class=light-table-filter][data-table=" + CSS.escape(_datatable) + "]");
+                _excludeinput = e.target;
+            };
+
+            var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+            Arr.forEach.call(tables, function(table) {
+                Arr.forEach.call(table.tBodies, function(tbody) {
+                    Arr.forEach.call(tbody.rows, _filter);
+                });
+            });
+        }
+
+        function _filter(row) {
+            var text = row.textContent.toLowerCase(),
+                val = _input.value.toLowerCase(),
+                negval = _excludeinput.value.toLowerCase();
+
+            row.style.display = val.replace(/\s/g, '') == '' ? 'table-row' : 'none';
+            val.split(' ').forEach(function(word) {
+                row.style.display = text.indexOf(word) === -1 || word == '' ? row.style.display : 'table-row';
+            });
+
+            negval.split(' ').forEach(function(word) {
+                row.style.display = text.indexOf(word) === -1 || word == '' ? row.style.display : 'none';
+            });
+        }
+
+        return {
+            init: function() {
+                var inputs = document.getElementsByClassName('light-table-filter');
+                Arr.forEach.call(inputs, function(input) {
+                    input.oninput = _onInputEvent;
+                });
+                var inputs = document.getElementsByClassName('light-table-exclude-filter');
+                Arr.forEach.call(inputs, function(input) {
+                    input.oninput = _onInputEvent;
+                });
+            }
+        };
+    })(Array.prototype);
+
+    document.addEventListener('readystatechange', function() {
+        if (document.readyState === 'complete') {
+            LightTableFilter.init();
+        }
+    });
 
 })(document);
 ```
