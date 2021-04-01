@@ -1,6 +1,6 @@
 # (Enhanced) Light-Table-Filter
 
-A light javascript-only HTML table filter based on: https://codepen.io/chriscoyier/pen/tIuBL / https://codepen.io/oceatoon/pen/jKqEI
+A light JavaScript-only HTML table filter based on: https://codepen.io/chriscoyier/pen/tIuBL / https://codepen.io/oceatoon/pen/jKqEI
 
 Features:
 
@@ -11,7 +11,7 @@ Features:
 
 To use it with more than one table just replace "order-table" in the input elements' data-table attributes and the tables's class attribute with a unique value for each table.
 
-## Javascript
+## JavaScript
 
 ```javascript
 (function(document) {
