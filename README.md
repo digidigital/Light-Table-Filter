@@ -27,9 +27,9 @@ Build using: https://codepen.io/chriscoyier/pen/tIuBL
 			
 			if (e.target.className === 'light-table-filter'){   
 				_input = e.target;
-				_excludeinput = e.target.parentElement.querySelector("input[class=light-table-exclude-filter][data-table=" + CSS.escape(_datatable) + "]");
+				_excludeinput = document.querySelector("input[class=light-table-exclude-filter][data-table=" + CSS.escape(_datatable) + "]");
 			} else {
-				_input = e.target.parentElement.querySelector("input[class=light-table-filter][data-table=" + CSS.escape(_datatable) + "]");
+				_input = document.querySelector("input[class=light-table-filter][data-table=" + CSS.escape(_datatable) + "]");
 				_excludeinput = e.target; 
 			}; 
 					
