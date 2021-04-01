@@ -7,7 +7,7 @@ Features:
 - Supports multiple space-delimited filter phrases
 - Can be used with multiple tables on the same page.
 - "Include Filter" - Table rows that contain at least one include-phrase are displayed. 
-- "Exclude Filter" - Table rows that are visible after the input filter was applied and contain at least one exclude-phrase will be hidden. 
+- "Exclude Filter" - Table rows that are visible after the include filter was applied and contain at least one exclude-phrase will be hidden. 
 
 To use it with more than one table just replace "order-table" in the input elements' data-table attributes and the tables's class attribute with a unique value for each table.
 
