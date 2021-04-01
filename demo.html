@@ -8,14 +8,16 @@
 
 		var _input;
 		var _excludeinput;
-
+		
 		function _onInputEvent(e) {
+	
+		var _datatable=e.target.getAttribute('data-table');
 			
-			if (e.target.className === 'light-table-filter'){
+			if (e.target.className === 'light-table-filter'){   
 				_input = e.target;
-				_excludeinput = document.querySelector('.light-table-exclude-filter');
+				_excludeinput = e.target.parentElement.querySelector("input[class=light-table-exclude-filter][data-table=" + CSS.escape(_datatable) + "]");
 			} else {
-				_input = document.querySelector('.light-table-filter');
+				_input = e.target.parentElement.querySelector("input[class=light-table-filter][data-table=" + CSS.escape(_datatable) + "]");
 				_excludeinput = e.target; 
 			}; 
 					
@@ -32,11 +34,7 @@
 			
 			row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row'; 
 			row.style.display = text.indexOf(negval) === -1 || negval == '' ? row.style.display : 'none' ; 
-			
-			console.log('text:'+ text );
-			console.log('negval:'+ negval + text.indexOf(negval));
-			console.log('val:'+ val + text.indexOf(val));
-			console.log('sum:' + text.indexOf(val) + text.indexOf(negval));
+
 		}
 
 		return {
@@ -60,7 +58,6 @@
 	});
 
 })(document);
-
 </script>
 </head>
 <body>
@@ -100,7 +97,45 @@
 			</tr>
 		</tbody>
 	</table>
-
+	<br/>
+	<input type="search" class="light-table-filter" data-table="another-table" placeholder="Include-Filter">
+	<input type="search" class="light-table-exclude-filter" data-table="another-table" placeholder="Exclude-Filter">
+	<table class="another-table table">
+		<thead>
+			<tr>
+				<th>Part Name</th>
+				<th>Part-Number</th>
+				<th>Location</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Tyre</td>
+				<td>DZ-1234-56789</td>
+				<td>Berlin</td>
+			</tr>
+			<tr>
+				<td>Door</td>
+				<td>DD-8765-43210</td>
+				<td>Paris</td>
+			</tr>
+			<tr>
+				<td>Motor</td>
+				<td>ZZ-6754-38901</td>
+				<td>New York</td>
+			</tr>
+						<tr>
+				<td>Motor</td>
+				<td>ZZ-6754-12354</td>
+				<td>Berlin</td>
+			</tr>
+			<tr>
+				<td>Spare Tyre</td>
+				<td>DZ-1234-99989</td>
+				<td>Paris</td>
+			</tr>
+		</tbody>
+	</table>
 </section>
 </body>
 </html>
