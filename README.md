@@ -6,7 +6,7 @@ Features:
 - "Include Filter" - Only table rows that contain this search term are displayed. 
 - "Exclude Filter" - Table rows that contain the search term are hidden. 
 
-Can be used with multiple tables on the same page. Just replace "order-table" in the input elements data-table attribute and the tables's class attribute with a unique value for each table.    
+Can be used with multiple tables on the same page. Just replace "order-table" in the input elements' data-table attributes and the tables's class attribute with a unique value for each table.    
 
 Build using: https://codepen.io/chriscoyier/pen/tIuBL
 
