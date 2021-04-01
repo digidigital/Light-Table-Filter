@@ -1,61 +1,70 @@
-<html>
+<!DOCTYPE html>
 <head>
+<meta charset="UTF-8">
+<title>(Enhanced) Light Javascript Table Filter</title>
 <script>
 (function(document) {
-	'use strict';
+    'use strict';
 
-	var LightTableFilter = (function(Arr) {
+    var LightTableFilter = (function(Arr) {
 
-		var _input;
-		var _excludeinput;
-		
-		function _onInputEvent(e) {
-	
-		var _datatable=e.target.getAttribute('data-table');
-			
-			if (e.target.className === 'light-table-filter'){   
-				_input = e.target;
-				_excludeinput = document.querySelector("input[class=light-table-exclude-filter][data-table=" + CSS.escape(_datatable) + "]");
-			} else {
-				_input = document.querySelector("input[class=light-table-filter][data-table=" + CSS.escape(_datatable) + "]");
-				_excludeinput = e.target; 
-			}; 
-					
-			var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
-			Arr.forEach.call(tables, function(table) {
-				Arr.forEach.call(table.tBodies, function(tbody) {
-					Arr.forEach.call(tbody.rows, _filter);
-				});
-			});
-		}
+        var _input;
+        var _excludeinput;
 
-		function _filter(row) {
-			var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase(), negval = _excludeinput.value.toLowerCase();		
-			
-			row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row'; 
-			row.style.display = text.indexOf(negval) === -1 || negval == '' ? row.style.display : 'none' ; 
+        function _onInputEvent(e) {
 
-		}
+            var _datatable = e.target.getAttribute('data-table');
 
-		return {
-			init: function() {
-				var inputs = document.getElementsByClassName('light-table-filter');
-				Arr.forEach.call(inputs, function(input) {
-					input.oninput = _onInputEvent;
-				});
-				var inputs = document.getElementsByClassName('light-table-exclude-filter');
-				Arr.forEach.call(inputs, function(input) {
-					input.oninput = _onInputEvent;
-				});
-			}
-		};
-	})(Array.prototype);
+            if (e.target.className === 'light-table-filter') {
+                _input = e.target;
+                _excludeinput = document.querySelector("input[class=light-table-exclude-filter][data-table=" + CSS.escape(_datatable) + "]");
+            } else {
+                _input = document.querySelector("input[class=light-table-filter][data-table=" + CSS.escape(_datatable) + "]");
+                _excludeinput = e.target;
+            };
 
-	document.addEventListener('readystatechange', function() {
-		if (document.readyState === 'complete') {
-			LightTableFilter.init();
-		}
-	});
+            var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+            Arr.forEach.call(tables, function(table) {
+                Arr.forEach.call(table.tBodies, function(tbody) {
+                    Arr.forEach.call(tbody.rows, _filter);
+                });
+            });
+        }
+
+        function _filter(row) {
+            var text = row.textContent.toLowerCase(),
+                val = _input.value.toLowerCase(),
+                negval = _excludeinput.value.toLowerCase();
+
+            row.style.display = val.replace(/\s/g, '') == '' ? 'table-row' : 'none';
+            val.split(' ').forEach(function(word) {
+                row.style.display = text.indexOf(word) === -1 || word == '' ? row.style.display : 'table-row';
+            });
+
+            negval.split(' ').forEach(function(word) {
+                row.style.display = text.indexOf(word) === -1 || word == '' ? row.style.display : 'none';
+            });
+        }
+
+        return {
+            init: function() {
+                var inputs = document.getElementsByClassName('light-table-filter');
+                Arr.forEach.call(inputs, function(input) {
+                    input.oninput = _onInputEvent;
+                });
+                var inputs = document.getElementsByClassName('light-table-exclude-filter');
+                Arr.forEach.call(inputs, function(input) {
+                    input.oninput = _onInputEvent;
+                });
+            }
+        };
+    })(Array.prototype);
+
+    document.addEventListener('readystatechange', function() {
+        if (document.readyState === 'complete') {
+            LightTableFilter.init();
+        }
+    });
 
 })(document);
 </script>
@@ -63,7 +72,7 @@
 <body>
 <section class="container">
 
-	<h2>Light Javascript Table Filter</h2>
+	<h2>(Enhanced) Light Javascript Table Filter</h2>
 
 	<input type="search" class="light-table-filter" data-table="order-table" placeholder="Include-Filter">
 	<input type="search" class="light-table-exclude-filter" data-table="order-table" placeholder="Exclude-Filter">
