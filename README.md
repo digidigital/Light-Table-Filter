@@ -81,8 +81,6 @@ To use it with more than one table just replace "order-table" in the input eleme
 ```
 ## HTML
 ```html
-<section class="container">
-
 	<h2>Light Javascript Table Filter</h2>
 
 	<input type="search" class="light-table-filter" data-table="order-table" placeholder="Include-Filter">
@@ -156,5 +154,4 @@ To use it with more than one table just replace "order-table" in the input eleme
 			</tr>
 		</tbody>
 	</table>
-</section>
 ```
